@@ -8,11 +8,11 @@ This extension helps you migrate Robotlegs v1.x applications over to v2.x by pro
 2. Drop the robotlegs-migration-extension SWC into your libs folder
 3. Install the extension into your Context Builder
 
-    context = new ContextBuilder()
-      .withBundle(ClassicRobotlegsBundle)
-      .withExtension(MigrationExtension)
-      .withConfig(MyApplicationConfig)
-      .build();
+        context = new ContextBuilder()
+            .withBundle(ClassicRobotlegsBundle)
+            .withExtension(MigrationExtension)
+            .withConfig(MyApplicationConfig)
+            .build();
 
 # License
 
