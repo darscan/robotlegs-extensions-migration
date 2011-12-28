@@ -9,18 +9,35 @@ package org.robotlegs.base
 {
 	import flash.utils.Dictionary;
 	import org.robotlegs.core.ICommandMap;
-	import org.robotlegs.v2.extensions.commandMap.api.ICommandMap;
+	import org.robotlegs.v2.extensions.eventCommandMap.api.IEventCommandMap;
+	import org.swiftsuspenders.Injector;
 
-	public class CommandMap implements org.robotlegs.core.ICommandMap
+	public class CommandMap implements ICommandMap
 	{
-		protected var detainedCommands:Dictionary;
 
-		private var commandMap:org.robotlegs.v2.extensions.commandMap.api.ICommandMap;
+		/*============================================================================*/
+		/* Private Properties                                                         */
+		/*============================================================================*/
 
-		public function CommandMap(commandMap:org.robotlegs.v2.extensions.commandMap.api.ICommandMap)
+		private const detainedCommands:Dictionary = new Dictionary();
+
+		private var injector:Injector;
+
+		private var eventCommandMap:IEventCommandMap;
+
+		/*============================================================================*/
+		/* Constructor                                                                */
+		/*============================================================================*/
+
+		public function CommandMap(injector:Injector, eventCommandMap:IEventCommandMap)
 		{
-			this.commandMap = commandMap;
+			this.injector = injector.createChildInjector();
+			this.eventCommandMap = eventCommandMap;
 		}
+
+		/*============================================================================*/
+		/* Public Functions                                                           */
+		/*============================================================================*/
 
 		public function detain(command:Object):void
 		{
@@ -34,18 +51,27 @@ package org.robotlegs.base
 
 		public function execute(commandClass:Class, payload:Object = null, payloadClass:Class = null, named:String = ""):void
 		{
-			// TODO: rl2 commandMap support
-			throw new Error("not implemented");
+			if (payload && payloadClass)
+			{
+				injector.map(payloadClass, named).toValue(payload);
+			}
+
+			injector.getInstance(commandClass).execute();
+
+			if (payload && payloadClass)
+			{
+				injector.unmap(payloadClass, named);
+			}
 		}
 
 		public function mapEvent(eventType:String, commandClass:Class, eventClass:Class = null, oneshot:Boolean = false):void
 		{
-			commandMap.map(commandClass).toEvent(eventType, eventClass, oneshot);
+			eventCommandMap.map(eventType, eventClass, oneshot).toCommand(commandClass)
 		}
 
 		public function unmapEvent(eventType:String, commandClass:Class, eventClass:Class = null):void
 		{
-			commandMap.unmap(commandClass).fromEvent(eventType, eventClass);
+			eventCommandMap.unmap(eventType, eventClass).fromCommand(commandClass);
 		}
 
 		public function unmapEvents():void
@@ -58,7 +84,7 @@ package org.robotlegs.base
 		{
 			// TODO: rl2 commandMap support
 			throw new Error("not implemented");
-			return commandMap.hasMapping(commandClass);
+			return eventCommandMap.hasMapping(commandClass);
 		}
 	}
 }

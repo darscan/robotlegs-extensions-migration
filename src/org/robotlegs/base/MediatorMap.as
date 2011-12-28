@@ -8,13 +8,16 @@
 package org.robotlegs.base
 {
 	import flash.display.DisplayObjectContainer;
-	
 	import org.robotlegs.core.IMediator;
-	import org.robotlegs.core.IMediatorMap;
 	import org.robotlegs.v2.extensions.mediatorMap.api.IMediatorMap;
 
 	public class MediatorMap implements org.robotlegs.core.IMediatorMap
 	{
+
+		/*============================================================================*/
+		/* Public Properties                                                          */
+		/*============================================================================*/
+
 		private var _contextView:DisplayObjectContainer;
 
 		public function get contextView():DisplayObjectContainer
@@ -39,7 +42,15 @@ package org.robotlegs.base
 			throw new Error("not implemented");
 		}
 
+		/*============================================================================*/
+		/* Private Properties                                                         */
+		/*============================================================================*/
+
 		private var mediatorMap:org.robotlegs.v2.extensions.mediatorMap.api.IMediatorMap;
+
+		/*============================================================================*/
+		/* Constructor                                                                */
+		/*============================================================================*/
 
 		public function MediatorMap(
 			mediatorMap:org.robotlegs.v2.extensions.mediatorMap.api.IMediatorMap,
@@ -48,6 +59,10 @@ package org.robotlegs.base
 			this.mediatorMap = mediatorMap;
 			_contextView = contextView;
 		}
+
+		/*============================================================================*/
+		/* Public Functions                                                           */
+		/*============================================================================*/
 
 		public function mapView(viewClassOrName:*,
 			mediatorClass:Class,
@@ -58,13 +73,12 @@ package org.robotlegs.base
 			// TODO: deal with viewClassOrName if string 
 			// TODO: deal with injectViewAs
 			// TODO: think about autoCreate and autoRemove
-			mediatorMap.map(mediatorClass).toView(viewClassOrName);
+			mediatorMap.map(viewClassOrName).toMediator(mediatorClass);
 		}
 
 		public function unmapView(viewClassOrName:*):void
 		{
-			// TODO: think about
-			throw new Error("not implemented");
+			mediatorMap.unmap(viewClassOrName).fromAll();
 		}
 
 		public function createMediator(viewComponent:Object):IMediator

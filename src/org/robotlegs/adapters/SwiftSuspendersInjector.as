@@ -26,7 +26,6 @@ package org.robotlegs.adapters
 		/* Public Properties                                                          */
 		/*============================================================================*/
 
-
 		public function get applicationDomain():ApplicationDomain
 		{
 			return injector.applicationDomain;
@@ -50,11 +49,10 @@ package org.robotlegs.adapters
 		/* Constructor                                                                */
 		/*============================================================================*/
 
-		public function SwiftSuspendersInjector(injector:Injector)
+		public function SwiftSuspendersInjector(injector:Injector = null)
 		{
-			this.injector = injector;
+			this.injector = injector || new Injector();
 		}
-
 
 		/*============================================================================*/
 		/* Public Functions                                                           */
@@ -66,8 +64,7 @@ package org.robotlegs.adapters
 		public function createChild(applicationDomain:ApplicationDomain = null):IInjector
 		{
 			return new SwiftSuspendersInjector(
-				injector.createChildInjector(applicationDomain)
-				);
+				injector.createChildInjector(applicationDomain));
 		}
 
 		/**
