@@ -5,7 +5,7 @@
 //  in accordance with the terms of the license agreement accompanying it. 
 //------------------------------------------------------------------------------
 
-package org.robotlegs.v2.extensions.migration
+package robotlegs.bender.extensions.migration
 {
 	import org.robotlegs.adapters.SwiftSuspendersInjector;
 	import org.robotlegs.adapters.SwiftSuspendersReflector;
@@ -19,13 +19,22 @@ package org.robotlegs.v2.extensions.migration
 	import org.robotlegs.core.IMediatorMap;
 	import org.robotlegs.core.IReflector;
 	import org.robotlegs.core.IViewMap;
-	import org.robotlegs.v2.core.api.IContext;
-	import org.robotlegs.v2.core.api.IContextExtension;
 	import org.swiftsuspenders.Injector;
+	import robotlegs.bender.core.api.IContext;
+	import robotlegs.bender.core.api.IContextExtension;
 
 	public class MigrationExtension implements IContextExtension
 	{
+
+		/*============================================================================*/
+		/* Private Properties                                                         */
+		/*============================================================================*/
+
 		private var context:IContext;
+
+		/*============================================================================*/
+		/* Public Functions                                                           */
+		/*============================================================================*/
 
 		public function install(context:IContext):void
 		{

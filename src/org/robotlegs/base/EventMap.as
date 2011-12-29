@@ -8,19 +8,31 @@
 package org.robotlegs.base
 {
 	import flash.events.IEventDispatcher;
-	
 	import org.robotlegs.core.IEventMap;
-	import org.robotlegs.v2.extensions.eventMap.api.IEventMap;
-	import org.robotlegs.v2.extensions.eventMap.impl.EventMap;
+	import robotlegs.bender.extensions.eventMap.api.IEventMap;
+	import robotlegs.bender.extensions.eventMap.impl.EventMap;
 
 	public class EventMap implements org.robotlegs.core.IEventMap
 	{
-		private var eventMap:org.robotlegs.v2.extensions.eventMap.api.IEventMap;
+
+		/*============================================================================*/
+		/* Private Properties                                                         */
+		/*============================================================================*/
+
+		private var eventMap:robotlegs.bender.extensions.eventMap.api.IEventMap;
+
+		/*============================================================================*/
+		/* Constructor                                                                */
+		/*============================================================================*/
 
 		public function EventMap(dispatcher:IEventDispatcher)
 		{
-			this.eventMap = new org.robotlegs.v2.extensions.eventMap.impl.EventMap(dispatcher);
+			this.eventMap = new robotlegs.bender.extensions.eventMap.impl.EventMap(dispatcher);
 		}
+
+		/*============================================================================*/
+		/* Public Functions                                                           */
+		/*============================================================================*/
 
 		public function mapListener(
 			dispatcher:IEventDispatcher,

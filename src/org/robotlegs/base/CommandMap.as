@@ -9,8 +9,8 @@ package org.robotlegs.base
 {
 	import flash.utils.Dictionary;
 	import org.robotlegs.core.ICommandMap;
-	import org.robotlegs.v2.extensions.eventCommandMap.api.IEventCommandMap;
 	import org.swiftsuspenders.Injector;
+	import robotlegs.bender.extensions.eventCommandMap.api.IEventCommandMap;
 
 	public class CommandMap implements ICommandMap
 	{
