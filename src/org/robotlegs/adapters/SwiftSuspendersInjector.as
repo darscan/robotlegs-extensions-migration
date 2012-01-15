@@ -8,6 +8,7 @@
 package org.robotlegs.adapters
 {
 	import flash.system.ApplicationDomain;
+	
 	import org.robotlegs.core.IInjector;
 	import org.swiftsuspenders.Injector;
 	import org.swiftsuspenders.dependencyproviders.ForwardingProvider;
@@ -28,7 +29,7 @@ package org.robotlegs.adapters
 
 		public function get applicationDomain():ApplicationDomain
 		{
-			return injector.applicationDomain;
+			return _injector.applicationDomain;
 		}
 
 		/**
@@ -36,22 +37,22 @@ package org.robotlegs.adapters
 		 */
 		public function set applicationDomain(value:ApplicationDomain):void
 		{
-			injector.applicationDomain = value;
+			_injector.applicationDomain = value;
 		}
 
 		/*============================================================================*/
 		/* Private Properties                                                         */
 		/*============================================================================*/
 
-		private var injector:Injector;
+		private var _injector:Injector;
 
 		/*============================================================================*/
 		/* Constructor                                                                */
 		/*============================================================================*/
 
-		public function SwiftSuspendersInjector(injector:Injector = null)
+		public function SwiftSuspendersInjector(injector:Injector)
 		{
-			this.injector = injector || new Injector();
+			_injector = injector;
 		}
 
 		/*============================================================================*/
@@ -64,7 +65,7 @@ package org.robotlegs.adapters
 		public function createChild(applicationDomain:ApplicationDomain = null):IInjector
 		{
 			return new SwiftSuspendersInjector(
-				injector.createChildInjector(applicationDomain));
+				_injector.createChildInjector(applicationDomain));
 		}
 
 		/**
@@ -72,7 +73,7 @@ package org.robotlegs.adapters
 		 */
 		public function getInstance(clazz:Class, named:String = ""):*
 		{
-			return injector.getInstance(clazz, named);
+			return _injector.getInstance(clazz, named);
 		}
 
 		/**
@@ -80,7 +81,7 @@ package org.robotlegs.adapters
 		 */
 		public function hasMapping(clazz:Class, named:String = ""):Boolean
 		{
-			return injector.satisfies(clazz, named);
+			return _injector.satisfies(clazz, named);
 		}
 
 		/**
@@ -88,7 +89,7 @@ package org.robotlegs.adapters
 		 */
 		public function injectInto(target:Object):void
 		{
-			injector.injectInto(target);
+			_injector.injectInto(target);
 		}
 
 		/**
@@ -96,7 +97,7 @@ package org.robotlegs.adapters
 		 */
 		public function instantiate(clazz:Class):*
 		{
-			return injector.getInstance(clazz);
+			return _injector.getInstance(clazz);
 		}
 
 		/**
@@ -105,7 +106,7 @@ package org.robotlegs.adapters
 		public function mapClass(
 			whenAskedFor:Class, instantiateClass:Class, named:String = ""):*
 		{
-			return injector.map(whenAskedFor, named).toType(instantiateClass);
+			return _injector.map(whenAskedFor, named).toType(instantiateClass);
 		}
 
 		/**
@@ -113,7 +114,7 @@ package org.robotlegs.adapters
 		 */
 		public function mapRule(whenAskedFor:Class, useRule:*, named:String = ""):*
 		{
-			return injector.map(whenAskedFor, named).toProvider(new ForwardingProvider(useRule));
+			return _injector.map(whenAskedFor, named).toProvider(new ForwardingProvider(useRule));
 		}
 
 		/**
@@ -121,7 +122,7 @@ package org.robotlegs.adapters
 		 */
 		public function mapSingleton(whenAskedFor:Class, named:String = ""):*
 		{
-			return injector.map(whenAskedFor, named).asSingleton();
+			return _injector.map(whenAskedFor, named).asSingleton();
 		}
 
 		/**
@@ -130,7 +131,7 @@ package org.robotlegs.adapters
 		public function mapSingletonOf(
 			whenAskedFor:Class, useSingletonOf:Class, named:String = ""):*
 		{
-			return injector.map(whenAskedFor, named).toSingleton(useSingletonOf);
+			return _injector.map(whenAskedFor, named).toSingleton(useSingletonOf);
 		}
 
 		/**
@@ -138,7 +139,7 @@ package org.robotlegs.adapters
 		 */
 		public function mapValue(whenAskedFor:Class, useValue:Object, named:String = ""):*
 		{
-			return injector.map(whenAskedFor, named).toValue(useValue);
+			return _injector.map(whenAskedFor, named).toValue(useValue);
 		}
 
 		/**
@@ -146,7 +147,7 @@ package org.robotlegs.adapters
 		 */
 		public function unmap(clazz:Class, named:String = ""):void
 		{
-			injector.unmap(clazz, named);
+			_injector.unmap(clazz, named);
 		}
 	}
 }

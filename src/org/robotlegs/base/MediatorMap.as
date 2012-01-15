@@ -9,7 +9,6 @@ package org.robotlegs.base
 {
 	import flash.display.DisplayObjectContainer;
 	import org.robotlegs.core.IMediator;
-	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 
 	public class MediatorMap implements org.robotlegs.core.IMediatorMap
 	{
@@ -46,14 +45,15 @@ package org.robotlegs.base
 		/* Private Properties                                                         */
 		/*============================================================================*/
 
-		private var mediatorMap:robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
+		// private var mediatorMap:robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
+		private var mediatorMap:Object;
 
 		/*============================================================================*/
 		/* Constructor                                                                */
 		/*============================================================================*/
 
 		public function MediatorMap(
-			mediatorMap:robotlegs.bender.extensions.mediatorMap.api.IMediatorMap,
+			mediatorMap:Object,
 			contextView:DisplayObjectContainer)
 		{
 			this.mediatorMap = mediatorMap;

@@ -19,20 +19,23 @@ package org.robotlegs.base
 		/* Private Properties                                                         */
 		/*============================================================================*/
 
-		private const detainedCommands:Dictionary = new Dictionary();
+		private const _detainedCommands:Dictionary = new Dictionary();
 
-		private var injector:Injector;
+		private var _injector:Injector;
 
-		private var eventCommandMap:IEventCommandMap;
+		private var _eventCommandMap:IEventCommandMap;
 
 		/*============================================================================*/
 		/* Constructor                                                                */
 		/*============================================================================*/
 
-		public function CommandMap(injector:Injector, eventCommandMap:IEventCommandMap)
+		public function CommandMap(eventCommandMap:IEventCommandMap, injector:Injector)
 		{
-			this.injector = injector.createChildInjector();
-			this.eventCommandMap = eventCommandMap;
+			// todo: explore Swiftsuspenders bug where:
+			//   CommandMap(injector:Injector, eventCommandMap:IEventCommandMap)
+			// injects null injector
+			_injector = injector.createChildInjector();
+			_eventCommandMap = eventCommandMap;
 		}
 
 		/*============================================================================*/
@@ -41,37 +44,37 @@ package org.robotlegs.base
 
 		public function detain(command:Object):void
 		{
-			detainedCommands[command] = true;
+			_detainedCommands[command] = true;
 		}
 
 		public function release(command:Object):void
 		{
-			delete detainedCommands[command];
+			delete _detainedCommands[command];
 		}
 
 		public function execute(commandClass:Class, payload:Object = null, payloadClass:Class = null, named:String = ""):void
 		{
 			if (payload && payloadClass)
 			{
-				injector.map(payloadClass, named).toValue(payload);
+				_injector.map(payloadClass, named).toValue(payload);
 			}
 
-			injector.getInstance(commandClass).execute();
+			_injector.getInstance(commandClass).execute();
 
 			if (payload && payloadClass)
 			{
-				injector.unmap(payloadClass, named);
+				_injector.unmap(payloadClass, named);
 			}
 		}
 
 		public function mapEvent(eventType:String, commandClass:Class, eventClass:Class = null, oneshot:Boolean = false):void
 		{
-			eventCommandMap.map(eventType, eventClass, oneshot).toCommand(commandClass)
+			_eventCommandMap.map(eventType, eventClass, oneshot).toCommand(commandClass)
 		}
 
 		public function unmapEvent(eventType:String, commandClass:Class, eventClass:Class = null):void
 		{
-			eventCommandMap.unmap(eventType, eventClass).fromCommand(commandClass);
+			_eventCommandMap.unmap(eventType, eventClass).fromCommand(commandClass);
 		}
 
 		public function unmapEvents():void
@@ -84,7 +87,7 @@ package org.robotlegs.base
 		{
 			// TODO: rl2 commandMap support
 			throw new Error("not implemented");
-			return eventCommandMap.hasMapping(commandClass);
+			return _eventCommandMap.hasMapping(commandClass);
 		}
 	}
 }

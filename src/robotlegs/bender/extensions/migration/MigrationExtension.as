@@ -20,25 +20,18 @@ package robotlegs.bender.extensions.migration
 	import org.robotlegs.core.IReflector;
 	import org.robotlegs.core.IViewMap;
 	import org.swiftsuspenders.Injector;
-	import robotlegs.bender.core.api.IContext;
-	import robotlegs.bender.core.api.IContextExtension;
+	import robotlegs.bender.framework.context.api.IContext;
+	import robotlegs.bender.framework.context.api.IContextConfig;
 
-	public class MigrationExtension implements IContextExtension
+	public class MigrationExtension implements IContextConfig
 	{
-
-		/*============================================================================*/
-		/* Private Properties                                                         */
-		/*============================================================================*/
-
-		private var context:IContext;
 
 		/*============================================================================*/
 		/* Public Functions                                                           */
 		/*============================================================================*/
 
-		public function install(context:IContext):void
+		public function configureContext(context:IContext):void
 		{
-			this.context = context;
 
 			const injector:Injector = context.injector;
 			const iinjector:IInjector = new SwiftSuspendersInjector(injector);
@@ -49,15 +42,6 @@ package robotlegs.bender.extensions.migration
 			injector.map(IMediatorMap).toSingleton(MediatorMap);
 			injector.map(IViewMap).toSingleton(ViewMap);
 			injector.map(IEventMap).toType(EventMap);
-		}
-
-		public function initialize():void
-		{
-		}
-
-		public function uninstall():void
-		{
-			// TODO: uninstall
 		}
 	}
 }
