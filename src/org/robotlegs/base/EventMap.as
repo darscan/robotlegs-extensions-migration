@@ -9,8 +9,8 @@ package org.robotlegs.base
 {
 	import flash.events.IEventDispatcher;
 	import org.robotlegs.core.IEventMap;
-	import robotlegs.bender.extensions.eventMap.api.IEventMap;
-	import robotlegs.bender.extensions.eventMap.impl.EventMap;
+	import robotlegs.bender.extensions.localEventMap.api.IEventMap;
+	import robotlegs.bender.extensions.localEventMap.impl.EventMap;
 
 	public class EventMap implements org.robotlegs.core.IEventMap
 	{
@@ -19,7 +19,7 @@ package org.robotlegs.base
 		/* Private Properties                                                         */
 		/*============================================================================*/
 
-		private var eventMap:robotlegs.bender.extensions.eventMap.api.IEventMap;
+		private var eventMap:robotlegs.bender.extensions.localEventMap.api.IEventMap;
 
 		/*============================================================================*/
 		/* Constructor                                                                */
@@ -27,7 +27,7 @@ package org.robotlegs.base
 
 		public function EventMap(dispatcher:IEventDispatcher)
 		{
-			this.eventMap = new robotlegs.bender.extensions.eventMap.impl.EventMap(dispatcher);
+			this.eventMap = new robotlegs.bender.extensions.localEventMap.impl.EventMap(dispatcher);
 		}
 
 		/*============================================================================*/
