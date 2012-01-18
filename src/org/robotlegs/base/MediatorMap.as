@@ -8,7 +8,9 @@
 package org.robotlegs.base
 {
 	import flash.display.DisplayObjectContainer;
+	import org.hamcrest.object.instanceOf;
 	import org.robotlegs.core.IMediator;
+	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 
 	public class MediatorMap implements org.robotlegs.core.IMediatorMap
 	{
@@ -45,18 +47,17 @@ package org.robotlegs.base
 		/* Private Properties                                                         */
 		/*============================================================================*/
 
-		// private var mediatorMap:robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
-		private var mediatorMap:Object;
+		private var _mediatorMap:IMediatorMap;
 
 		/*============================================================================*/
 		/* Constructor                                                                */
 		/*============================================================================*/
 
 		public function MediatorMap(
-			mediatorMap:Object,
+			mediatorMap:IMediatorMap,
 			contextView:DisplayObjectContainer)
 		{
-			this.mediatorMap = mediatorMap;
+			_mediatorMap = mediatorMap;
 			_contextView = contextView;
 		}
 
@@ -73,12 +74,12 @@ package org.robotlegs.base
 			// TODO: deal with viewClassOrName if string 
 			// TODO: deal with injectViewAs
 			// TODO: think about autoCreate and autoRemove
-			mediatorMap.map(viewClassOrName).toMediator(mediatorClass);
+			_mediatorMap.map(instanceOf(viewClassOrName)).toMediator(mediatorClass);
 		}
 
 		public function unmapView(viewClassOrName:*):void
 		{
-			mediatorMap.unmap(viewClassOrName).fromAll();
+			_mediatorMap.unmap(instanceOf(viewClassOrName)).fromMediators();
 		}
 
 		public function createMediator(viewComponent:Object):IMediator
