@@ -85,9 +85,7 @@ package org.robotlegs.base
 
 		public function hasEventCommand(eventType:String, commandClass:Class, eventClass:Class = null):Boolean
 		{
-			// TODO: rl2 commandMap support
-			throw new Error("not implemented");
-			return _eventCommandMap.hasMapping(commandClass);
+			return _eventCommandMap.getMapping(eventType, eventClass).forCommand(commandClass) != null;
 		}
 	}
 }

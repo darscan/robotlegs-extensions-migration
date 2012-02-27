@@ -34,9 +34,7 @@ package robotlegs.bender.extensions.migration
 		{
 
 			const injector:Injector = context.injector;
-			const iinjector:IInjector = new SwiftSuspendersInjector(injector);
-
-			injector.map(IInjector).toValue(iinjector);
+			injector.map(IInjector).toValue(new SwiftSuspendersInjector(injector));
 			injector.map(IReflector).toSingleton(SwiftSuspendersReflector);
 			injector.map(ICommandMap).toSingleton(CommandMap);
 			injector.map(IMediatorMap).toSingleton(MediatorMap);

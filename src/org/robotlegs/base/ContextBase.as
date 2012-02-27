@@ -8,9 +8,8 @@
 package org.robotlegs.base
 {
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
-	
+
 	import org.robotlegs.core.IContext;
 
 	/**
