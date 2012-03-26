@@ -10,7 +10,6 @@ package org.robotlegs.mvcs
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-
 	import org.robotlegs.base.ContextBase;
 	import org.robotlegs.base.ContextError;
 	import org.robotlegs.base.ContextEvent;
@@ -20,19 +19,19 @@ package org.robotlegs.mvcs
 	import org.robotlegs.core.IMediatorMap;
 	import org.robotlegs.core.IReflector;
 	import org.robotlegs.core.IViewMap;
-
-	import robotlegs.bender.bundles.classic.ClassicRobotlegsBundle;
+	import robotlegs.bender.bundles.mvcs.MVCSBundle;
 	import robotlegs.bender.extensions.migration.MigrationExtension;
+	import robotlegs.bender.framework.context.api.IContext;
 	import robotlegs.bender.framework.context.impl.Context;
 
 	[Event(name="shutdownComplete", type="org.robotlegs.base.ContextEvent")]
 	[Event(name="startupComplete", type="org.robotlegs.base.ContextEvent")]
-	public class Context extends ContextBase implements IContext
+	public class Context extends ContextBase implements org.robotlegs.core.IContext
 	{
 		protected var _autoStartup:Boolean;
 		protected var _contextView:DisplayObjectContainer;
 
-		private var _rl2Context:robotlegs.bender.framework.context.impl.Context;
+		private var _rl2Context:robotlegs.bender.framework.context.api.IContext;
 
 		public function Context(contextView:DisplayObjectContainer = null, autoStartup:Boolean = true)
 		{
@@ -168,9 +167,9 @@ package org.robotlegs.mvcs
 
 		private function mapInjections():void
 		{
-			_rl2Context = new robotlegs.bender.framework.context.impl.Context(
-				ClassicRobotlegsBundle,
-				MigrationExtension, _contextView);
+			_rl2Context = new robotlegs.bender.framework.context.impl.Context()
+				.extend(MVCSBundle, MigrationExtension)
+				.configure(_contextView);
 		}
 
 		protected function checkAutoStartup():void
