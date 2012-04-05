@@ -85,9 +85,9 @@ package org.robotlegs.base
 		{
 			const mapping:IMediatorMappingConfig =
 				_mediatorMap.map(instanceOf(viewClass)).toMediator(mediatorClass);
+			var viewInjectTypes : Array = [];
 			if (injectViewAs)
 			{
-				var viewInjectTypes : Array;
 				if (injectViewAs is Array)
 				{
 					viewInjectTypes = (injectViewAs as Array).concat();
@@ -96,11 +96,11 @@ package org.robotlegs.base
 				{
 					viewInjectTypes = [injectViewAs];
 				}
-				const guardAndHook:MediatorCreationGuardAndHook =
-					new MediatorCreationGuardAndHook(viewClass, mediatorClass, viewInjectTypes, _injector);
-				mapping.withGuards(guardAndHook);
-				mapping.withHooks(guardAndHook);
 			}
+			const guardAndHook:MediatorCreationGuardAndHook =
+				new MediatorCreationGuardAndHook(viewClass, mediatorClass, viewInjectTypes, _injector);
+			mapping.withGuards(guardAndHook);
+			mapping.withHooks(guardAndHook);
 		}
 
 		public function unmapView(viewClassOrName:*):void
