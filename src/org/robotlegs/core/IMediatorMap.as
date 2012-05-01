@@ -18,13 +18,13 @@ package org.robotlegs.core
 		/**
 		 * Map an <code>IMediator</code> to a view Class
 		 *
-		 * @param viewClass The concrete view Class. FQCN-based mapping is not supported
+		 * @param viewClassOrName The concrete view Class. WARNING: FQCN-based mapping is no longer supported
 		 * @param mediatorClass The <code>IMediator</code> Class
 		 * @param injectViewAs The explicit view Interface or Class that the mediator depends on OR an Array of such Interfaces/Classes.
 		 * @param autoCreate Automatically construct and register an instance of Class <code>mediatorClass</code> when an instance of Class <code>viewClass</code> is detected
 		 * @param autoRemove Automatically remove an instance of Class <code>mediatorClass</code> when its <code>viewClass</code> leaves the ancestory of the context view
 		 */
-		function mapView(viewClass:Class, mediatorClass:Class, injectViewAs:* = null, autoCreate:Boolean = true, autoRemove:Boolean = true):void;
+		function mapView(viewClassOrName:*, mediatorClass:Class, injectViewAs:* = null, autoCreate:Boolean = true, autoRemove:Boolean = true):void;
 		
 		/**
 		 * Unmap a view Class

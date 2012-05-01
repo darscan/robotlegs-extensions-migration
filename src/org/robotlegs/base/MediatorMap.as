@@ -8,13 +8,9 @@
 package org.robotlegs.base
 {
 	import flash.display.DisplayObjectContainer;
-
-	import org.hamcrest.object.instanceOf;
 	import org.robotlegs.core.IMediator;
 	import org.swiftsuspenders.Injector;
-
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorFactory;
-
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 	import robotlegs.bender.extensions.mediatorMap.api.MediatorFactoryEvent;
 	import robotlegs.bender.extensions.mediatorMap.dsl.IMediatorMappingConfig;
@@ -55,6 +51,7 @@ package org.robotlegs.base
 		/*============================================================================*/
 
 		private var _mediatorMap:IMediatorMap;
+
 		private var _injector:Injector;
 
 		/*============================================================================*/
@@ -65,7 +62,7 @@ package org.robotlegs.base
 			mediatorMap:IMediatorMap,
 			contextView:DisplayObjectContainer,
 			injector:Injector,
-			mediatorFactory : IMediatorFactory)
+			mediatorFactory:IMediatorFactory)
 		{
 			_mediatorMap = mediatorMap;
 			_contextView = contextView;
@@ -77,15 +74,16 @@ package org.robotlegs.base
 		/* Public Functions                                                           */
 		/*============================================================================*/
 
-		public function mapView(viewClass:Class,
+		public function mapView(
+			viewClassOrName:*,
 			mediatorClass:Class,
 			injectViewAs:* = null,
 			autoCreate:Boolean = true,
 			autoRemove:Boolean = true):void
 		{
 			const mapping:IMediatorMappingConfig =
-				_mediatorMap.map(instanceOf(viewClass)).toMediator(mediatorClass);
-			var viewInjectTypes : Array = [];
+				_mediatorMap.map(viewClassOrName).toMediator(mediatorClass);
+			var viewInjectTypes:Array = [];
 			if (injectViewAs)
 			{
 				if (injectViewAs is Array)
@@ -98,14 +96,14 @@ package org.robotlegs.base
 				}
 			}
 			const guardAndHook:MediatorCreationGuardAndHook =
-				new MediatorCreationGuardAndHook(viewClass, mediatorClass, viewInjectTypes, _injector);
+				new MediatorCreationGuardAndHook(viewClassOrName, mediatorClass, viewInjectTypes, _injector);
 			mapping.withGuards(guardAndHook);
 			mapping.withHooks(guardAndHook);
 		}
 
 		public function unmapView(viewClassOrName:*):void
 		{
-			_mediatorMap.unmap(instanceOf(viewClassOrName)).fromMediators();
+			_mediatorMap.unmap(viewClassOrName).fromMediators();
 		}
 
 		public function createMediator(viewComponent:Object):IMediator
@@ -156,6 +154,10 @@ package org.robotlegs.base
 			throw new Error("not implemented");
 		}
 
+		/*============================================================================*/
+		/* Private Functions                                                          */
+		/*============================================================================*/
+
 		private function onMediatorRemove(event:MediatorFactoryEvent):void
 		{
 			event.mediator.preRemove();
@@ -164,21 +166,32 @@ package org.robotlegs.base
 }
 
 import flash.display.DisplayObject;
-
 import org.robotlegs.mvcs.Mediator;
-
 import org.swiftsuspenders.Injector;
 
 class MediatorCreationGuardAndHook
 {
+
+	/*============================================================================*/
+	/* Private Properties                                                         */
+	/*============================================================================*/
+
 	private var _viewType:Class;
+
 	private var _mediatorType:Class;
+
 	private var _viewInjectTypes:Array;
+
 	private var _injector:Injector;
+
 	private var _view:DisplayObject;
 
-	public function MediatorCreationGuardAndHook(viewType : Class, mediatorType : Class,
-	                                             viewInjectTypes : Array, injector : Injector)
+	/*============================================================================*/
+	/* Constructor                                                                */
+	/*============================================================================*/
+
+	public function MediatorCreationGuardAndHook(viewType:Class, mediatorType:Class,
+		viewInjectTypes:Array, injector:Injector)
 	{
 		_viewType = viewType;
 		_mediatorType = mediatorType;
@@ -186,24 +199,28 @@ class MediatorCreationGuardAndHook
 		_injector = injector;
 	}
 
-	public function approve() : Boolean
+	/*============================================================================*/
+	/* Public Functions                                                           */
+	/*============================================================================*/
+
+	public function approve():Boolean
 	{
-		const view : DisplayObject = _injector.getInstance(_viewType);
-		for (var i : int = _viewInjectTypes.length; i--;)
+		const view:DisplayObject = _injector.getInstance(_viewType);
+		for (var i:int = _viewInjectTypes.length; i--; )
 		{
-			const type : Class = _viewInjectTypes[i];
+			const type:Class = _viewInjectTypes[i];
 			_injector.map(type).toValue(view);
 		}
 		_view = view;
 		return true;
 	}
 
-	public function hook() : void
+	public function hook():void
 	{
-		var mediator : Mediator = _injector.getInstance(_mediatorType);
-		for (var i : int = _viewInjectTypes.length; i--;)
+		var mediator:Mediator = _injector.getInstance(_mediatorType);
+		for (var i:int = _viewInjectTypes.length; i--; )
 		{
-			const type : Class = _viewInjectTypes[i];
+			const type:Class = _viewInjectTypes[i];
 			_injector.unmap(type);
 		}
 		mediator.setViewComponent(_view);

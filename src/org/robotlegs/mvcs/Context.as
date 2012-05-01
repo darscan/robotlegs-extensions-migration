@@ -21,8 +21,8 @@ package org.robotlegs.mvcs
 	import org.robotlegs.core.IViewMap;
 	import robotlegs.bender.bundles.mvcs.MVCSBundle;
 	import robotlegs.bender.extensions.migration.MigrationExtension;
-	import robotlegs.bender.framework.context.api.IContext;
-	import robotlegs.bender.framework.context.impl.Context;
+	import robotlegs.bender.framework.api.IContext;
+	import robotlegs.bender.framework.impl.Context;
 
 	[Event(name="shutdownComplete", type="org.robotlegs.base.ContextEvent")]
 	[Event(name="startupComplete", type="org.robotlegs.base.ContextEvent")]
@@ -31,7 +31,7 @@ package org.robotlegs.mvcs
 		protected var _autoStartup:Boolean;
 		protected var _contextView:DisplayObjectContainer;
 
-		private var _rl2Context:robotlegs.bender.framework.context.api.IContext;
+		private var _rl2Context:robotlegs.bender.framework.api.IContext;
 
 		public function Context(contextView:DisplayObjectContainer = null, autoStartup:Boolean = true)
 		{
@@ -167,7 +167,7 @@ package org.robotlegs.mvcs
 
 		private function mapInjections():void
 		{
-			_rl2Context = new robotlegs.bender.framework.context.impl.Context()
+			_rl2Context = new robotlegs.bender.framework.impl.Context()
 				.extend(MVCSBundle, MigrationExtension)
 				.configure(_contextView);
 		}
