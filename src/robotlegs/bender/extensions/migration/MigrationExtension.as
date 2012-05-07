@@ -21,9 +21,9 @@ package robotlegs.bender.extensions.migration
 	import org.robotlegs.core.IViewMap;
 	import org.swiftsuspenders.Injector;
 	import robotlegs.bender.framework.api.IContext;
-	import robotlegs.bender.framework.api.IContextExtension;
+	import robotlegs.bender.framework.api.IExtension;
 
-	public class MigrationExtension implements IContextExtension
+	public class MigrationExtension implements IExtension
 	{
 
 		/*============================================================================*/
