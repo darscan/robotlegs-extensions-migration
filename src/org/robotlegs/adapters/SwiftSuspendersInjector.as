@@ -81,7 +81,7 @@ package org.robotlegs.adapters
 		 */
 		public function hasMapping(clazz:Class, named:String = ""):Boolean
 		{
-			return _injector.satisfies(clazz, named);
+			return _injector.satisfiesDirectly(clazz, named);
 		}
 
 		/**

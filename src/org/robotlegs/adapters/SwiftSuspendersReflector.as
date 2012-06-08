@@ -9,7 +9,7 @@ package org.robotlegs.adapters
 {
 	import flash.system.ApplicationDomain;
 	import org.robotlegs.core.IReflector;
-	import org.swiftsuspenders.DescribeTypeJSONReflector;
+	import org.swiftsuspenders.reflection.DescribeTypeJSONReflector;
 
 	/**
 	 * SwiftSuspender <code>IReflector</code> adpater - See: <a href="http://github.com/tschneidereit/SwiftSuspenders">SwiftSuspenders</a>
