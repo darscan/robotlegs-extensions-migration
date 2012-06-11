@@ -69,7 +69,7 @@ package org.robotlegs.base
 
 		public function mapEvent(eventType:String, commandClass:Class, eventClass:Class = null, oneshot:Boolean = false):void
 		{
-			_eventCommandMap.map(eventType, eventClass, oneshot).toCommand(commandClass)
+			_eventCommandMap.map(eventType, eventClass).toCommand(commandClass).once(oneshot);
 		}
 
 		public function unmapEvent(eventType:String, commandClass:Class, eventClass:Class = null):void
