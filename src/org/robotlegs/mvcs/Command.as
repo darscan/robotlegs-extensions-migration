@@ -14,14 +14,16 @@ package org.robotlegs.mvcs
 	import org.robotlegs.core.ICommandMap;
 	import org.robotlegs.core.IInjector;
 	import org.robotlegs.core.IMediatorMap;
-	
+
+	import robotlegs.bender.extensions.contextView.ContextView;
+
 	/**
 	 * Abstract MVCS command implementation
 	 */
 	public class Command
 	{
 		[Inject]
-		public var contextView:DisplayObjectContainer;
+		public var contextViewWrapper:ContextView;
 		
 		[Inject]
 		public var commandMap:ICommandMap;
@@ -34,6 +36,11 @@ package org.robotlegs.mvcs
 		
 		[Inject]
 		public var mediatorMap:IMediatorMap;
+
+		public function get contextView():DisplayObjectContainer
+		{
+			return contextViewWrapper.view;
+		}
 		
 		public function Command()
 		{

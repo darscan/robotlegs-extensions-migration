@@ -10,6 +10,8 @@ package org.robotlegs.base
 	import flash.display.DisplayObjectContainer;
 	import org.robotlegs.core.IMediator;
 	import org.swiftsuspenders.Injector;
+
+	import robotlegs.bender.extensions.contextView.ContextView;
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorFactory;
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
 	import robotlegs.bender.extensions.mediatorMap.api.MediatorFactoryEvent;
@@ -60,12 +62,12 @@ package org.robotlegs.base
 
 		public function MediatorMap(
 			mediatorMap:IMediatorMap,
-			contextView:DisplayObjectContainer,
+			contextView:ContextView,
 			injector:Injector,
 			mediatorFactory:IMediatorFactory)
 		{
 			_mediatorMap = mediatorMap;
-			_contextView = contextView;
+			_contextView = contextView.view;
 			_injector = injector;
 			mediatorFactory.addEventListener(MediatorFactoryEvent.MEDIATOR_REMOVE, onMediatorRemove);
 		}
@@ -103,7 +105,7 @@ package org.robotlegs.base
 
 		public function unmapView(viewClassOrName:*):void
 		{
-			_mediatorMap.unmap(viewClassOrName).fromMediators();
+			_mediatorMap.unmap(viewClassOrName).fromAll();
 		}
 
 		public function createMediator(viewComponent:Object):IMediator
