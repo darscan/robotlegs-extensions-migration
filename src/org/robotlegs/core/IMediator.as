@@ -47,7 +47,7 @@ package org.robotlegs.core
 		/**
 		 * The <code>IMediator</code>'s view component
 		 *
-		 * @param The view component
+		 * @param viewComponent The view component
 		 */
 		function setViewComponent(viewComponent:Object):void;
 	

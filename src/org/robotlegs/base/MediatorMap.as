@@ -10,10 +10,10 @@ package org.robotlegs.base
 	import flash.display.DisplayObjectContainer;
 	import org.robotlegs.core.IMediator;
 	import org.swiftsuspenders.Injector;
-	import robotlegs.bender.extensions.mediatorMap.api.IMediatorFactory;
+
+	import robotlegs.bender.extensions.contextView.ContextView;
 	import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
-	import robotlegs.bender.extensions.mediatorMap.api.MediatorFactoryEvent;
-	import robotlegs.bender.extensions.mediatorMap.dsl.IMediatorMappingConfig;
+	import robotlegs.bender.extensions.mediatorMap.dsl.IMediatorConfigurator;
 
 	public class MediatorMap implements org.robotlegs.core.IMediatorMap
 	{
@@ -36,13 +36,11 @@ package org.robotlegs.base
 
 		public function get enabled():Boolean
 		{
-			// TODO: think about
 			return true;
 		}
 
 		public function set enabled(value:Boolean):void
 		{
-			// TODO: think about
 			throw new Error("not implemented");
 		}
 
@@ -60,14 +58,12 @@ package org.robotlegs.base
 
 		public function MediatorMap(
 			mediatorMap:IMediatorMap,
-			contextView:DisplayObjectContainer,
-			injector:Injector,
-			mediatorFactory:IMediatorFactory)
+			contextView:ContextView,
+			injector:Injector)
 		{
 			_mediatorMap = mediatorMap;
-			_contextView = contextView;
+			_contextView = contextView.view;
 			_injector = injector;
-			mediatorFactory.addEventListener(MediatorFactoryEvent.MEDIATOR_REMOVE, onMediatorRemove);
 		}
 
 		/*============================================================================*/
@@ -81,7 +77,7 @@ package org.robotlegs.base
 			autoCreate:Boolean = true,
 			autoRemove:Boolean = true):void
 		{
-			const mapping:IMediatorMappingConfig =
+			const mapping:IMediatorConfigurator =
 				_mediatorMap.map(viewClassOrName).toMediator(mediatorClass);
 			var viewInjectTypes:Array = [];
 			if (injectViewAs)
@@ -103,65 +99,49 @@ package org.robotlegs.base
 
 		public function unmapView(viewClassOrName:*):void
 		{
-			_mediatorMap.unmap(viewClassOrName).fromMediators();
+			_mediatorMap.unmap(viewClassOrName).fromAll();
 		}
 
 		public function createMediator(viewComponent:Object):IMediator
 		{
-			// TODO: think about
 			throw new Error("not implemented");
 		}
 
 		public function registerMediator(viewComponent:Object, mediator:IMediator):void
 		{
-			// TODO: think about
 			throw new Error("not implemented");
 		}
 
 		public function removeMediator(mediator:IMediator):IMediator
 		{
-			// TODO: think about
 			throw new Error("not implemented");
 		}
 
 		public function removeMediatorByView(viewComponent:Object):IMediator
 		{
-			// TODO: think about
 			throw new Error("not implemented");
 		}
 
 		public function retrieveMediator(viewComponent:Object):IMediator
 		{
-			// TODO: think about
 			throw new Error("not implemented");
 		}
 
 		public function hasMapping(viewClassOrName:*):Boolean
 		{
-			// TODO: think about
 			throw new Error("not implemented");
 		}
 
 		public function hasMediator(mediator:IMediator):Boolean
 		{
-			// TODO: think about
 			throw new Error("not implemented");
 		}
 
 		public function hasMediatorForView(viewComponent:Object):Boolean
 		{
-			// TODO: think about
 			throw new Error("not implemented");
 		}
 
-		/*============================================================================*/
-		/* Private Functions                                                          */
-		/*============================================================================*/
-
-		private function onMediatorRemove(event:MediatorFactoryEvent):void
-		{
-			event.mediator.preRemove();
-		}
 	}
 }
 

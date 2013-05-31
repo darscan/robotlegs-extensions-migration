@@ -27,7 +27,7 @@ package org.robotlegs.base
 
 		public function EventMap(dispatcher:IEventDispatcher)
 		{
-			this.eventMap = new robotlegs.bender.extensions.localEventMap.impl.EventMap(dispatcher);
+			this.eventMap = new robotlegs.bender.extensions.localEventMap.impl.EventMap();
 		}
 
 		/*============================================================================*/

@@ -168,7 +168,7 @@ package org.robotlegs.mvcs
 		private function mapInjections():void
 		{
 			_rl2Context = new robotlegs.bender.framework.impl.Context()
-				.extend(MVCSBundle, MigrationExtension)
+				.install(MVCSBundle, MigrationExtension)
 				.configure(_contextView);
 		}
 
