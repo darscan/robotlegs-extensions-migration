@@ -19,9 +19,9 @@ package robotlegs.bender.extensions.migration
 	import org.robotlegs.core.IMediatorMap;
 	import org.robotlegs.core.IReflector;
 	import org.robotlegs.core.IViewMap;
-	import org.swiftsuspenders.Injector;
 	import robotlegs.bender.framework.api.IContext;
 	import robotlegs.bender.framework.api.IExtension;
+	import robotlegs.bender.framework.impl.RobotlegsInjector;
 
 	public class MigrationExtension implements IExtension
 	{
@@ -33,7 +33,7 @@ package robotlegs.bender.extensions.migration
 		public function extend(context:IContext):void
 		{
 
-			const injector:Injector = context.injector;
+			const injector:RobotlegsInjector = context.injector as RobotlegsInjector;
 			injector.map(IInjector).toValue(new SwiftSuspendersInjector(injector));
 			injector.map(IReflector).toSingleton(SwiftSuspendersReflector);
 			injector.map(ICommandMap).toSingleton(CommandMap);
